@@ -22,3 +22,5 @@ Definir una api para poder gestionar nuestro inventario de productos
 
 1- Definir las rutas a utilizar
 2- Preparar los test para realizar las funciones y los endpoints
+3- Hacer los logins y la autentifiacion para cada endpoint
+4- Crear los routes para limpiar codigo

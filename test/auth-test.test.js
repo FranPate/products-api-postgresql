@@ -17,7 +17,7 @@ describe('Suite de prueba auth', () => {
     });
     it('should return 400 when no data is provided', (done) => {
         chai.request(app)
-            .post('/login')
+            .post('/auth/login')
             .end((err, res) => {
                 chai.assert.equal(res.statusCode, 400);
                 done();
@@ -25,7 +25,7 @@ describe('Suite de prueba auth', () => {
     });
     it('should return 200 for succesful login', (done) => {
         chai.request(app)
-            .post('/login')
+            .post('/auth/login')
             .set('content-type', 'application/json')
             .send({user: 'francisco', password: '1234'})
             .end((err, res) => {
@@ -38,7 +38,7 @@ describe('Suite de prueba auth', () => {
     it('should return 200 when jwt correct', (done) => {
         // Cuando la llamada tiene correctamente la llave
         chai.request(app)
-            .post('/login')
+            .post('/auth/login')
             .set('content-type', 'application/json')
             .send({user: 'francisco', password: '1234'})
             .end((err, res) => {
