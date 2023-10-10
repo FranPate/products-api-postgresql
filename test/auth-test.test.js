@@ -5,8 +5,8 @@ chai.use(chaiHttp);
 
 const app = require('../app').app;
 
-describe('Suite de prueba e2e para la API', () => {
-    it('should return 401 when no jwt', (done) => {
+describe('Suite de prueba auth', () => {
+    it('should return 401 when no jwt aviable', (done) => {
         // Cuando la llamada no tiene correctamente la llave
         chai.request(app)
             .get('/products')
@@ -15,19 +15,42 @@ describe('Suite de prueba e2e para la API', () => {
                 done();
             });
     });
+    it('should return 400 when no data is provided', (done) => {
+        chai.request(app)
+            .post('/login')
+            .end((err, res) => {
+                chai.assert.equal(res.statusCode, 400);
+                done();
+            });
+    });
+    it('should return 200 for succesful login', (done) => {
+        chai.request(app)
+            .post('/login')
+            .set('content-type', 'application/json')
+            .send({user: 'francisco', password: '1234'})
+            .end((err, res) => {
+                // Expected valid login
+                chai.assert.equal(res.statusCode, 200);
+                done();
+            
+            });
+    });
     it('should return 200 when jwt correct', (done) => {
         // Cuando la llamada tiene correctamente la llave
         chai.request(app)
             .post('/login')
+            .set('content-type', 'application/json')
+            .send({user: 'francisco', password: '1234'})
             .end((err, res) => {
+                // Expected valid login
+                chai.assert.equal(res.statusCode, 200);
                 chai.request(app)
                     .get('/products')
-                   .set('Autorization', `JWT ${res.body.token}`)
-                   .end((err, res) => {
+                    .set('Authorization', `JWT ${res.body.token}`)
+                    .end((err, res) => {
                         chai.assert.equal(res.statusCode, 200);
                         done();
                     });
             });
-        
     });
 });
