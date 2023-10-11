@@ -29,3 +29,4 @@ Definir una api para poder gestionar nuestro inventario de productos
 7- Terimar funcionalidad de peticiones GET
 8- Nueva funcionalidad de editar todos los productos para modificar el orden (PUT)
 9- Test agregando productos (POST) (No enviar {objetos})
+10- Hacer funcionalidades por producto unico (GET), (PUT), (DELETE) y sus respectivos tests

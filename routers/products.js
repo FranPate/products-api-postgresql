@@ -31,21 +31,26 @@ router.route('/product')
         productsController.addProduct(req.user.userId, product)
         res.status(201).json(product)
         })
-/*
-app.get('/products/:productid', (req,res,) => {
-    console.log(req);
-    res.status(200).send('Hello world')
-})
 
-app.delete('/products/:productid', (req,res) => {
-    console.log(req);
-    res.status(200).send('Hello world')
-})
+router.route('/product/:productid')
+    .get(passport.authenticate('jwt', {session: false}),
+        (req, res) => {
+            let user = getUser(req.user.userId);
+            res.status(200).json({
+                product: productsController.getProduct(req.user.userId, req.params.productid)
+            })
+        })
+    .put(passport.authenticate('jwt', {session: false}),
+        (req, res) => {
+            console.log('req.body')
+            productsController.setProduct(req.user.userId, req.body, req.params.productid);
+            res.status(200).send();
+        })
+    .delete(passport.authenticate('jwt', {session: false}),
+        (req, res) => {
+            productsController.deleteProduct(req.user.userId, req.params.productid);
+            res.status(200).send()
+        })
 
-app.put('/products/:productid', () => {
-    console.log(req);
-    res.status(200).send('Hello world')
-})
-*/
 
 exports.router = router;
