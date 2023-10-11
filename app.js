@@ -20,26 +20,6 @@ app.use('/auth', authRoutes)
 
 app.use('/products', productsRoutes)
 
-app.post('/products/:productid', (req,res) => {
-    console.log(req);
-    res.status(200).send('Hello world')
-})
-
-app.get('/products/:productid', (req,res,) => {
-    rconsole.log(req);
-    res.status(200).send('Hello world')
-})
-
-app.delete('/products/:productid', (req,res) => {
-    console.log(req);
-    res.status(200).send('Hello world')
-})
-
-app.put('/products/:productid', () => {
-    console.log(req);
-    res.status(200).send('Hello world')
-})
-
 app.listen(port, () => {
     console.log('Server started at port 3000')
 })

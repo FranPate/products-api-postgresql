@@ -28,7 +28,8 @@ router.route('/login')
                 return res.status(401).json({message: 'Invalid credentials'});
             }
             // Si son validas, generamos un JWT y los devolvemos
-            const token = jwt.sign({userId: result}, 'secretPassword')
+            let user = usersController.getUserIdFromUserName(req.body.user);
+            const token = jwt.sign({userId: user.userId, userName: user.userName}, 'secretPassword');
             res.status(200).json(
             {token: token}
             )
