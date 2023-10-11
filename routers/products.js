@@ -15,17 +15,25 @@ router.route('/')
                 products: productsController.getProductsOfUser(req.user.userId)
             })
     })
-    .put((req, res) => {
-        productsController.setProducts(req.body.user, req.body.products);
+    .put(passport.authenticate('jwt', {session: false}),
+        (req, res) => {
+            productsController.setProducts(req.user.userId, req.body.products);
+            res.status(200).send();
     })
+router.route('/product')
+    .post(passport.authenticate('jwt', {session: false}),
+        (req,res) => {
+            let product = {
+                name: req.body.name,
+                color: req.body.color,
+                price: req.body.price
+            }
+        productsController.addProduct(req.user.userId, product)
+        res.status(201).json(product)
+        })
 /*
-app.post('/products/:productid', (req,res) => {
-    console.log(req);
-    res.status(200).send('Hello world')
-})
-
 app.get('/products/:productid', (req,res,) => {
-    rconsole.log(req);
+    console.log(req);
     res.status(200).send('Hello world')
 })
 

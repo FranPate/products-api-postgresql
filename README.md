@@ -26,3 +26,6 @@ Definir una api para poder gestionar nuestro inventario de productos
 4- Reformatear el codigo
 5- Crear los routes para limpiar codigo
 6- Hacer el test para los productos (problema con el userId y jwt)
+7- Terimar funcionalidad de peticiones GET
+8- Nueva funcionalidad de editar todos los productos para modificar el orden (PUT)
+9- Test agregando productos (POST) (No enviar {objetos})

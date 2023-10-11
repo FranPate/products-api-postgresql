@@ -1,14 +1,14 @@
 const productsDatabase = {}
 
 const bootstrapProducts = (userId) => {
-    productsDatabase[userId] = [{name: 'Celular'}, {name: 'Televisor'}]
+    productsDatabase[userId] = []
 }
 
 const getProductsOfUser = (userId) => {
     return productsDatabase[userId];
 }
-const addProduct = (userId, productName) => {
-    productsDatabase[userId].push({name: productName});
+const addProduct = (userId, product) => {
+    productsDatabase[userId].push(product);
 }
 
 const setProducts = (userId, products) => {
