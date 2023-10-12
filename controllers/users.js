@@ -29,7 +29,6 @@ const getUserIdFromUserName = (userName) => {
 };
 
 const checkUserCredentials = (userName, password, done) => {
-    console.log('checking user credentials');
     // Comprobar que las credenciales son correctas
     let user = getUserIdFromUserName(userName);
     if (user) {
