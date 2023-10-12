@@ -3,7 +3,7 @@ const crypto = require('../crypto.js');
 const products = require('./products.js');
 const userDatabase = {};
 
-const registerUser = (userName, password) => {
+const registerUser = async (userName, password) => {
     let hashedPwd = crypto.hashPasswordSync(password);
     // Guardar en la base de datos nuestro usuario
     let userId = uuid.v4();
@@ -12,7 +12,7 @@ const registerUser = (userName, password) => {
         userName: userName,
         password: hashedPwd
     }
-    products.bootstrapProducts(userId);
+    await products.bootstrapProducts(userId);
 }
 
 const getUser = (userId) => {

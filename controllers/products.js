@@ -1,34 +1,63 @@
 const productsDatabase = {}
 
 const bootstrapProducts = (userId) => {
-    productsDatabase[userId] = []
+    return new Promise((resolve, reject) => {
+        productsDatabase[userId] = [];
+        resolve();
+    })
 }
 
 const getProductsOfUser = (userId) => {
-    return productsDatabase[userId];
+    return new Promise((resolve, reject) => {
+        resolve(productsDatabase[userId]);
+    })
 }
 
 const getProduct = (userId, index) => {
-    return productsDatabase[userId][index];
+    return new Promise((resolve, reject) => {
+        if(!productsDatabase[userId][index]){
+            reject();
+        } else {
+            resolve(productsDatabase[userId][index]);
+        }
+    })
 }
 
 const addProduct = (userId, product) => {
-    productsDatabase[userId].push(product);
+    return new Promise((resolve, reject) => {
+        productsDatabase[userId].push(product);
+        resolve();
+    })
 }
 
 const setProducts = (userId, products) => {
-    productsDatabase[userId] = products;
+    return new Promise((resolve, reject) => {
+        productsDatabase[userId] = products;
+        resolve();
+    })
 }
 
 const setProduct = (userId, product, index) => {
-    productsDatabase[userId][index] = {};
-    productsDatabase[userId][index] = product;
+    return new Promise((resolve, reject) => {
+        if (!productsDatabase[userId][index]){
+            reject();
+        } else {
+            productsDatabase[userId][index] = {};
+            productsDatabase[userId][index] = product;
+            resolve();
+        }
+    })
 }
 
 const deleteProduct = (userId, index) => {
-    if(productsDatabase[userId][index]){
-        productsDatabase[userId].splice(index, 1);
-    }
+    return new Promise((resolve, reject) => {
+        if(productsDatabase[userId][index]){
+            productsDatabase[userId].splice(index, 1);
+            resolve();
+        }else {
+            reject();
+        }
+    })
 }
 
 exports.bootstrapProducts = bootstrapProducts;

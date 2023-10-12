@@ -30,3 +30,5 @@ Definir una api para poder gestionar nuestro inventario de productos
 8- Nueva funcionalidad de editar todos los productos para modificar el orden (PUT)
 9- Test agregando productos (POST) (No enviar {objetos})
 10- Hacer funcionalidades por producto unico (GET), (PUT), (DELETE) y sus respectivos tests
+11- Emprolijar el codigo crando handlers (Middlewares?)
+12- Pasar todo a promesas y gestionar errores
