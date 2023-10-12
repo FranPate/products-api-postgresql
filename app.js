@@ -1,5 +1,6 @@
 const express = require('express');
 const middlewares = require('./middlewares')
+require('./database')
 // Routes
 const authRoutes = require('./routers/auth').router;
 const productsRoutes = require('./routers/products').router;

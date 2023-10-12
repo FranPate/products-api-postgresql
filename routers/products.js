@@ -5,7 +5,7 @@ const productsHttpHandler = require('../handler/products');
 
 router.route('/')
     .get(productsHttpHandler.getProductsFromUser)
-    .put(productsHttpHandler.setProductsToUser)
+    /*.put(productsHttpHandler.setProductsToUser)*/
 
 router.route('/product')
     .post(productsHttpHandler.addProductToUser)

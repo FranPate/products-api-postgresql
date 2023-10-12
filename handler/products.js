@@ -1,5 +1,6 @@
 const productsController = require('../controllers/products');
 const { getUser } = require('../controllers/users');
+const { to } = require('../tools/to')
 
 const getProductsFromUser = async (req, res) => {
     let user = getUser(req.user.userId);
@@ -10,10 +11,10 @@ const getProductsFromUser = async (req, res) => {
     })
 }
 
-const setProductsToUser = async (req, res) => {
+/*const setProductsToUser = async (req, res) => {
     await productsController.setProducts(req.user.userId, req.body.products);
     res.status(200).send();
-}
+}*/
 
 const addProductToUser = async (req,res) => {
     let product = {
@@ -26,10 +27,11 @@ const addProductToUser = async (req,res) => {
 }
 
 const getProductFromUser = async (req, res) => {
-    let product = await productsController.getProduct(req.user.userId, req.params.productid)
-    res.status(200).json({
-        product: product
-    })
+    let [productError, product] = await to(productsController.getProduct(req.user.userId, req.params.productid))
+    if(productError){
+        res.status(400).json({message: 'No product could be found'})
+    }
+        res.status(200).json({product: product})
 }
 
 const editProductFromUser = async (req, res) => {
@@ -52,7 +54,7 @@ const deleteProductFromUser = async (req, res) => {
 }
 
 exports.getProductsFromUser = getProductsFromUser;
-exports.setProductsToUser = setProductsToUser;
+/*exports.setProductsToUser = setProductsToUser;*/
 exports.addProductToUser = addProductToUser;
 exports.getProductFromUser = getProductFromUser;
 exports.editProductFromUser = editProductFromUser;
