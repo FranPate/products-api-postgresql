@@ -34,3 +34,4 @@ Definir una api para poder gestionar nuestro inventario de productos
 12- Pasar todo a promesas y gestionar errores
 13- Conectar a Mongo y hacer la base de datos
 14- Tests satisfactorios
+15- Crear un signup

@@ -3,6 +3,12 @@ const {to} = require('../tools/to');
 //Controllers
 const usersController = require('../controllers/users');
 
+const createUser = async (req, res) => {
+    console.log(req.body);
+    await usersController.registerUser(req.body.user, req.body.password);
+    res.status(200).json({message: 'User Created'});
+}
+
 
 const loginUser = async (req, res) => {
     if (!req.body) {
@@ -25,3 +31,4 @@ const loginUser = async (req, res) => {
 }
 
 exports.loginUser = loginUser;
+exports.createUser = createUser;
