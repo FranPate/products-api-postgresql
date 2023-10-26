@@ -4,8 +4,6 @@
 
 Definir una api para poder gestionar nuestro inventario de productos utilizando Express, Node.js y MongoDB
 
----
-
 ## Acciones
 
 - Identificarnos (auth)
@@ -14,8 +12,6 @@ Definir una api para poder gestionar nuestro inventario de productos utilizando 
 - Consultar todos los productos (get)
 - Consultar por id (get)
 - Editar el contenido de los productos (put)
-
----
 
 ## REST Design
 
@@ -26,8 +22,6 @@ Definir una api para poder gestionar nuestro inventario de productos utilizando 
 - Editar un Producto: PUT /products/product/:id
 - Sistema de Credenciales
 
----
-
 ## Instalacion
 
 Debes tener node.js previamente instalado, una vez clonada la api situarse en el directorio de esta misma e ingresar el siguente comando:
@@ -37,8 +31,6 @@ Debes tener node.js previamente instalado, una vez clonada la api situarse en el
 Luego poner en marcha utilizando
 
 `node app.js`
-
----
 
 ## Funcionamiento 
 
