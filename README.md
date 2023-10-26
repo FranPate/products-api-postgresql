@@ -34,7 +34,9 @@ Luego poner en marcha utilizando
 
 ## Funcionamiento 
 
-Aqui un video de como utilizar la api
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Qw1jm6HYZwU?si=43kv5nr561TDgGFM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+Aqui un [video](https://youtu.be/Qw1jm6HYZwU) de como utilizar la api
+
 
 ---
+
+![Products Img](/miniatura.jpg)
