@@ -1,14 +1,10 @@
-const mongoose = require('mongoose');
 const { to } = require('../tools/to.js');
-const ProductsModel = mongoose.model('ProductsModel', {userId: String, products: []});
-
-let productsDatabase = [];
+const ProductsModel = require('../modules/products.js')
 
 const bootstrapProducts = (userId) => {
     return new Promise(async (resolve, reject) => {
         let newProducts = new ProductsModel({userId: userId, products: []});
         await newProducts.save();
-        productsDatabase[userId] = [];
         resolve();
     })
 }

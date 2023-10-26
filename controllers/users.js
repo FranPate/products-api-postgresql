@@ -1,9 +1,8 @@
 const uuid = require('uuid');
 const crypto = require('../crypto.js');
 const products = require('./products.js');
-const mongoose = require('mongoose');
 const { to } = require('../tools/to.js');
-const UserModel = mongoose.model('UserModel', {userId: String, userName: String, password: String});
+const UserModel = require('../modules/users.js')
 
 const registerUser = async (userName, password) => {
     return new Promise (async (resolve, reject) => {
