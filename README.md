@@ -2,7 +2,7 @@
 
 ## Objetivo:
 
-Definir una api para poder gestionar nuestro inventario de productos utilizando Express, Node.js y MongoDB
+Definir una api para poder gestionar nuestro inventario de productos utilizando Express, Node.js y PostgreSQL
 
 ## Acciones
 
@@ -17,9 +17,9 @@ Definir una api para poder gestionar nuestro inventario de productos utilizando 
 
 - Añadir Producto: POST /products/product
 - Consultar Todos los Productos: GET /products
-- Consultar un Producto: GET /products/product/:id
-- Eliminar Producto: DELETE /products/product/:id
-- Editar un Producto: PUT /products/product/:id
+- Consultar un Producto: GET /products/product/:name
+- Eliminar Producto: DELETE /products/product/:name
+- Editar un Producto: PUT /products/product/:name
 - Sistema de Credenciales
 
 ## Instalacion
@@ -31,11 +31,6 @@ Debes tener node.js previamente instalado, una vez clonada la api situarse en el
 Luego poner en marcha utilizando
 
 `node app.js`
-
-## Funcionamiento 
-
-Aqui un [video](https://youtu.be/Qw1jm6HYZwU) de como utilizar la api
-
 
 ---
 

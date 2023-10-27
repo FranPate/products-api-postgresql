@@ -1,88 +1,98 @@
-const { to } = require('../tools/to.js');
-const ProductsModel = require('../modules/products.js')
+const pool = require('../database.js');
 
-const bootstrapProducts = (userId) => {
+const getProductsOfUser = (user) => {
     return new Promise(async (resolve, reject) => {
-        let newProducts = new ProductsModel({userId: userId, products: []});
-        await newProducts.save();
-        resolve();
+        try {
+            // Consulta SQL para obtener un usuario por su userId
+            const query = {
+              text: 'SELECT name, color, price FROM public."Products" WHERE "userId" = $1',
+              values: [user.userId],
+            };
+        
+            // Ejecutar la consulta
+            const result = await pool.query(query);
+        
+            // Si hay resultados, devolver el primer resultado
+            if (result.rows.length > 0) {
+              return resolve(result.rows);
+            } else {
+              // Si no hay resultados, devolver null o un objeto vacío según tu preferencia
+              return resolve([]);
+            }
+          } catch (error) {
+            return reject(error);
+        }
     })
 }
 
-const getProductsOfUser = (userId) => {
+const getProduct = async (user, name) => {
+    try {
+        // Consulta SQL para obtener un usuario por su userId
+        const query = {
+          text: 'SELECT name, color, price FROM public."Products" WHERE "userId" = $1 AND name = $2',
+          values: [user.userId, name],
+        };
+        // Ejecutar la consulta
+        const result = await pool.query(query);
+        return Promise.resolve(result.rows);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+const addProduct = (user, product) => {
     return new Promise(async (resolve, reject) => {
-        let [err, dbProducts] = await to(ProductsModel.findOne({userId: userId}).exec());
-        if (err){
-            return reject(err);
+        try {
+            // Obtener los productos del usuario por userId
+            const query = {
+              text: 'INSERT INTO public."Products" ("userId", name, color, price) VALUES ($1, $2, $3, $4)',
+              values: [user.userId, product.name, product.color, product.price],
+            };
+            await pool.query(query);
+            return resolve();
+
+        } catch (error) {
+            // Manejar errores
+            return reject(error);
         }
-        resolve(dbProducts || []);
     })
 }
 
-const getProduct = (userId, index) => {
+const setProduct = (user, product, name) => {
     return new Promise(async (resolve, reject) => {
-        let [err, dbProducts] = await to(ProductsModel.findOne({userId: userId}).exec());
-        if (err){
-            return reject(err);
+        try {
+            // Obtener los productos del usuario por userId
+            const query = {
+            text: 'UPDATE public."Products" SET name=$1, color=$2, price=$3 WHERE "userId" = $4 AND name = $5',
+            values: [product.name, product.color, product.price, user.userId, name],
+            };
+            await pool.query(query);
+            return resolve();
+        } catch (error) {
+            // Manejar errores
+            return reject(error);
         }
-        resolve(dbProducts.products[index]);
     })
 }
 
-const addProduct = (userId, product) => {
+const deleteProduct = (user, name) => {
     return new Promise(async (resolve, reject) => {
-        let [err, dbProducts] = await to(ProductsModel.findOne({userId: userId}).exec());
-        if (err){
-            return reject();
+        try {
+            // Obtener los productos del usuario por userId
+            const query = {
+              text: 'DELETE FROM public."Products" WHERE "userId" = $1 AND name = $2',
+              values: [user.userId, name],
+            };
+            await pool.query(query);
+            return resolve();
+        } catch (error) {
+            // Manejar errores
+            return reject(error);
         }
-        dbProducts.products.push(product)
-        await dbProducts.save();
-        resolve();
     })
 }
 
-/*const setProducts = (userId, products) => {
-    return new Promise(async (resolve, reject) => {
-        let [err, dbProducts] = await to(ProductsModel.findOne({userId: userId}).exec());
-        console.log(dbProducts);
-        if (err){
-            return reject();
-        }
-        dbProducts.products = products;
-        await dbProducts.save();
-        resolve();
-    });
-}*/
-
-const setProduct = (userId, product, index) => {
-    return new Promise(async (resolve, reject) => {
-        let [err, dbProducts] = await to(ProductsModel.findOne({userId: userId}).exec());
-        if (err){
-            return reject();
-        }
-            dbProducts.products[index] = product;
-            await dbProducts.save();
-            resolve();
-    })
-}
-
-const deleteProduct = (userId, index) => {
-    return new Promise(async (resolve, reject) => {
-        let [err, dbProducts] = await to(ProductsModel.findOne({userId: userId}).exec());
-        if (err){
-            return reject();
-        }
-        if (dbProducts.products[index]){
-            dbProducts.products.splice(index, 1);
-        }
-        await dbProducts.save();
-        resolve();
-    })
-}
-
-exports.bootstrapProducts = bootstrapProducts;
 exports.addProduct = addProduct;
-/*exports.setProducts = setProducts;*/
 exports.setProduct = setProduct;
 exports.getProductsOfUser = getProductsOfUser;
 exports.getProduct = getProduct;

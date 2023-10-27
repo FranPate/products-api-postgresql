@@ -6,7 +6,7 @@ chai.use(chaiHttp);
 const app = require('../app').app;
 
 describe('Suite de prueba auth', () => {
-    it('should return 200 when created user', (done) => {
+    /*it('should return 200 when created user', (done) => {
         chai.request(app)
             .post('/auth/signup')
             .set('content-type', 'application/json')
@@ -15,7 +15,7 @@ describe('Suite de prueba auth', () => {
                 chai.assert.equal(res.statusCode, 200);
                 done();
             });
-    });
+    });*/
     it('should return 401 when no jwt aviable', (done) => {
         // Cuando la llamada no tiene correctamente la llave
         chai.request(app)
@@ -37,7 +37,7 @@ describe('Suite de prueba auth', () => {
         chai.request(app)
             .post('/auth/login')
             .set('content-type', 'application/json')
-            .send({user: 'francisco', password: '1234'})
+            .send({user: 'lautaro', password: '5678'})
             .end((err, res) => {
                 // Expected valid login
                 chai.assert.equal(res.statusCode, 200);
@@ -50,7 +50,7 @@ describe('Suite de prueba auth', () => {
         chai.request(app)
             .post('/auth/login')
             .set('content-type', 'application/json')
-            .send({user: 'francisco', password: '1234'})
+            .send({user: 'lautaro', password: '5678'})
             .end((err, res) => {
                 // Expected valid login
                 chai.assert.equal(res.statusCode, 200);

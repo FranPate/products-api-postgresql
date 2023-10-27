@@ -1,16 +1,12 @@
-const mongoose = require('mongoose');
-let password = 'admin';
-let databaseName = 'productsApi';
+const { Pool } = require('pg');
 
-if (process.env.TEST_DB_URL === 'test') {
-    databaseName = 'testdb';
-}
+// Configuración de la conexión a la base de datos
+const pool = new Pool({
+    user: 'test', // Nombre de usuario de PostgreSQL
+    host: 'localhost', // Host de la base de datos
+    database: 'Users', // Nombre de la base de datos
+    password: 'test', // Contraseña de PostgreSQL
+    port: 5432, // Puerto de PostgreSQL (por defecto es 5432)
+  });
 
-mongoose.connect(`mongodb+srv://admin:${password}@miapi.krrw0la.mongodb.net/${databaseName}?retryWrites=true&w=majority`, 
-    {useNewUrlParser: true, useUnifiedTopology: true});
-/*
-const Cat = mongoose.model('Cat', { name: String });
-
-const kitty = new Cat({ name: 'Zildjian' });
-kitty.save().then(() => console.log('meow'));
-*/
+module.exports = pool;

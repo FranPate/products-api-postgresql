@@ -2,3 +2,4 @@
 node_modules/
 Procesos.md
 .env
+test/

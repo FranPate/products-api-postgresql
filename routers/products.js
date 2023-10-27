@@ -5,12 +5,11 @@ const productsHttpHandler = require('../handler/products');
 
 router.route('/')
     .get(productsHttpHandler.getProductsFromUser)
-    /*.put(productsHttpHandler.setProductsToUser)*/
 
 router.route('/product')
     .post(productsHttpHandler.addProductToUser)
 
-router.route('/product/:productid')
+router.route('/product/:name')
     .get(productsHttpHandler.getProductFromUser)
     .put(productsHttpHandler.editProductFromUser)
     .delete(productsHttpHandler.deleteProductFromUser)

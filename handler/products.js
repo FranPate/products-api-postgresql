@@ -11,11 +11,6 @@ const getProductsFromUser = async (req, res) => {
     })
 }
 
-/*const setProductsToUser = async (req, res) => {
-    await productsController.setProducts(req.user.userId, req.body.products);
-    res.status(200).send();
-}*/
-
 const addProductToUser = async (req,res) => {
     let product = {
         name: req.body.name,
@@ -23,11 +18,11 @@ const addProductToUser = async (req,res) => {
         price: req.body.price
     }
     await productsController.addProduct(req.user.userId, product)
-    res.status(201).json(product)
+    res.status(201).json(`Product added : ${product.name}, ${product.color}, ${product.price}`)
 }
 
 const getProductFromUser = async (req, res) => {
-    let [productError, product] = await to(productsController.getProduct(req.user.userId, req.params.productid))
+    let [productError, product] = await to(productsController.getProduct(req.user.userId, req.params.name))
     if(productError){
         res.status(400).json({message: 'No product could be found'})
     }
@@ -36,7 +31,7 @@ const getProductFromUser = async (req, res) => {
 
 const editProductFromUser = async (req, res) => {
     try {
-        await productsController.setProduct(req.user.userId, req.body, req.params.productid);
+        await productsController.setProduct(req.user.userId, req.body, req.params.name);
         res.status(200).send();
     } catch (error) {
         res.status(400).json({message: 'No product could be found'})
@@ -45,7 +40,7 @@ const editProductFromUser = async (req, res) => {
 
 const deleteProductFromUser = async (req, res) => {
     try {
-        await productsController.deleteProduct(req.user.userId, req.params.productid);
+        await productsController.deleteProduct(req.user.userId, req.params.name);
         res.status(200).send()
     } catch(error) {
         res.status(400).json({message: 'No product could be found'})
@@ -54,7 +49,6 @@ const deleteProductFromUser = async (req, res) => {
 }
 
 exports.getProductsFromUser = getProductsFromUser;
-/*exports.setProductsToUser = setProductsToUser;*/
 exports.addProductToUser = addProductToUser;
 exports.getProductFromUser = getProductFromUser;
 exports.editProductFromUser = editProductFromUser;

@@ -1,43 +1,67 @@
 const uuid = require('uuid');
 const crypto = require('../crypto.js');
-const products = require('./products.js');
-const { to } = require('../tools/to.js');
-const UserModel = require('../modules/users.js')
+const pool = require('../database.js');
 
 const registerUser = async (userName, password) => {
     return new Promise (async (resolve, reject) => {
         let hashedPwd = crypto.hashPasswordSync(password);
         // Guardar en la base de datos nuestro usuario
         let userId = uuid.v4();
-        let newUser = new UserModel({
-            userId: userId,
-            userName: userName,
-            password: hashedPwd
-        });
-        await newUser.save();
-        await products.bootstrapProducts(userId);
+        const query = {
+            text: 'INSERT INTO  public."Users"("userId", "userName", password) VALUES($1, $2, $3)',
+            values: [userId, userName, hashedPwd]
+        };
+        // Ejecutar la consulta
+        await pool.query(query);
         resolve();
     })
 }
 
-const getUser = (userId) => {
-    return new Promise (async (resolve, reject) =>{
-        let [err, result] = await to(UserModel.findOne({userId: userId}).exec());
-        if (err){
-            return reject (err);
-        }
-        resolve(result);
-    })
+const getUser = async (userId) => {
+    try {
+        // Consulta SQL para obtener un usuario por su userId
+        const query = {
+          text: 'SELECT * FROM public."Users" WHERE "userId" = $1',
+          values: [userId],
+        };
     
+        // Ejecutar la consulta
+        const result = await pool.query(query);
+    
+        // Si hay resultados, devolver el primer resultado
+        if (result.rows.length > 0) {
+          return Promise.resolve(result.rows[0]);
+        } else {
+          // Si no hay resultados, devolver null o un objeto vacío según tu preferencia
+          return Promise.resolve(null); // o Promise.resolve({}) si quieres devolver un objeto vacío
+        }
+      } catch (error) {
+        return Promise.reject(error);
+      } 
 }
 
 const getUserIdFromUserName = (userName) => {
     return new Promise (async (resolve, reject) => {
-        let [err, result] = await to(UserModel.findOne({userName: userName}).exec());
-        if (err){
-            return reject (err);
+        try {
+            // Consulta SQL para obtener el userId por el userName
+            const query = {
+              text: 'SELECT * FROM public."Users" WHERE "userName" = $1',
+              values: [userName],
+            };
+        
+            // Ejecutar la consulta
+            const result = await pool.query(query);
+        
+            // Si hay resultados, devolver el userId
+            if (result.rows.length > 0) {
+              return resolve(result.rows[0]);
+            } else {
+              // Si no hay resultados, devolver null o lanzar un error según tu preferencia
+              return resolve(null); // o Promise.reject(new Error('Usuario no encontrado'))
+            }
+        } catch (error) {
+            return reject(error);
         }
-        resolve(result);
     })
 };
 

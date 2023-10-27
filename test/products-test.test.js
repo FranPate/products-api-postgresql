@@ -6,54 +6,6 @@ chai.use(chaiHttp);
 const app = require('../app').app;
 
 describe('Suite de prueba products', () => {
-    /*it('should return the products of the user', (done) => {
-        // Cuando la llamada no tiene correctamente la llave
-        let products = [{
-            name: 'Celular',
-            color: 'Negro',
-            price: 1000
-        },
-        {
-            name: 'Televisor',
-            color: 'Plateado',
-            price: 500
-        },
-        {
-            name: 'Teclado',
-            color: 'Blanco',
-            price: 200
-        }]
-        chai.request(app)
-            .post('/auth/login')
-            .set('content-type', 'application/json')
-            .send({user: 'francisco', password: '1234'})
-            .end((err, res) => {
-                let token = res.body.token;
-                // Expected valid login
-                chai.assert.equal(res.statusCode, 200);
-                chai.request(app)
-                    .put('/products')
-                    .send({
-                        products: products
-                    })
-                    .set('Authorization', `JWT ${token}`)
-                    .end((err, res) => {
-                        chai.request(app)
-                        .get('/products')
-                        .set('Authorization', `JWT ${token}`)
-                        .end((err, res) => {
-                            // Tiene productos Celular y Televisor
-                            // { owner: 'francisco', products: [product]}
-                            chai.assert.equal(res.statusCode, 200);
-                            chai.assert.equal(res.body.owner, 'francisco');
-                            chai.assert.equal(res.body.products.length, products.length);
-                            chai.assert.equal(res.body.products[0].name, products[0].name);
-                            chai.assert.equal(res.body.products[1].name, products[1].name);
-                            done();
-                        });
-                    });
-            });
-    });*/
     it('should add a product', (done) => {
         // Cuando la llamada no tiene correctamente la llave
         let product = {
@@ -64,7 +16,7 @@ describe('Suite de prueba products', () => {
         chai.request(app)
             .post('/auth/login')
             .set('content-type', 'application/json')
-            .send({user: 'joan', password: '4321'})
+            .send({user: 'lautaro', password: '5678'})
             .end((err, res) => {
                 let token = res.body.token;
                 // Expected valid login
@@ -89,20 +41,20 @@ describe('Suite de prueba products', () => {
     it('should edit the product', (done) => {
         // Cuando la llamada no tiene correctamente la llave
         let product = {
-            name: 'Celular',
-            color: 'Gris',
+            name: 'Parlantes',
+            color: 'Negro',
             price: 1000
         };
         chai.request(app)
             .post('/auth/login')
             .set('content-type', 'application/json')
-            .send({user: 'joan', password: '4321'})
+            .send({user: 'lautaro', password: '5678'})
             .end((err, res) => {
                 let token = res.body.token;
                 // Expected valid login
                 chai.assert.equal(res.statusCode, 200);
                 chai.request(app)
-                    .put('/products/product/0')
+                    .put('/products/product/Parlantes')
                     .send(product)
                     .set('Authorization', `JWT ${token}`)
                     .end((err, res) => {
@@ -123,13 +75,13 @@ describe('Suite de prueba products', () => {
         chai.request(app)
             .post('/auth/login')
             .set('content-type', 'application/json')
-            .send({user: 'joan', password: '4321'})
+            .send({user: 'lautaro', password: '5678'})
             .end((err, res) => {
                 let token = res.body.token;
                 // Expected valid login
                 chai.assert.equal(res.statusCode, 200);
                 chai.request(app)
-                    .get('/products/product/1')
+                    .get('/products/product/Computadora')
                     .set('Authorization', `JWT ${token}`)
                     .end((err, res) => {
                         // Tiene productos Celular y Televisor
@@ -145,13 +97,13 @@ describe('Suite de prueba products', () => {
         chai.request(app)
             .post('/auth/login')
             .set('content-type', 'application/json')
-            .send({user: 'francisco', password: '1234'})
+            .send({user: 'lautaro', password: '5678'})
             .end((err, res) => {
                 let token = res.body.token;
                 // Expected valid login
                 chai.assert.equal(res.statusCode, 200);
                 chai.request(app)
-                    .delete('/products/product/0')
+                    .delete('/products/product/Alfombra')
                     .set('Authorization', `JWT ${token}`)
                     .end((err, res) => {
                         chai.request(app)
